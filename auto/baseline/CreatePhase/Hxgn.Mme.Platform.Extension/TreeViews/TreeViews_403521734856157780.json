@@ -1,0 +1,53 @@
+{
+  "Id": 403521734856157780,
+  "TreeNodes": [
+    {
+      "Id": 403521734856157780,
+      "ParentId": 0,
+      "Name": "site",
+      "TreeNodeType": 1,
+      "TreeNodeProperties": {
+        "IsVisible": true,
+        "IsSelected": false,
+        "IsCollapsed": false,
+        "IsActive": true
+      }
+    },
+    {
+      "Id": 404829913816771156,
+      "ParentId": 403521734856157780,
+      "Name": "PIT #1",
+      "TreeNodeType": 2,
+      "TreeNodeProperties": {
+        "IsVisible": true,
+        "IsSelected": false,
+        "IsCollapsed": false,
+        "IsActive": true
+      }
+    },
+    {
+      "Id": 404829961002691156,
+      "ParentId": 403521734856157780,
+      "Name": "PIT #2",
+      "TreeNodeType": 2,
+      "TreeNodeProperties": {
+        "IsVisible": true,
+        "IsSelected": false,
+        "IsCollapsed": false,
+        "IsActive": true
+      }
+    },
+    {
+      "Id": 404830002639546964,
+      "ParentId": 403521734856157780,
+      "Name": "PIT #3",
+      "TreeNodeType": 2,
+      "TreeNodeProperties": {
+        "IsVisible": true,
+        "IsSelected": false,
+        "IsCollapsed": false,
+        "IsActive": true
+      }
+    }
+  ]
+}
