@@ -18,7 +18,7 @@ export class TestBaseline {
       __dirname,
       this.pathBaseline,
       feature,
-      this.folder
+      this.folder,
     )
     const pathDestiny = path.join(this.pathLocal, this.folder)
 

@@ -190,7 +190,7 @@ export class WebTreeView extends WebClickable {
       title,
       await this.name(title),
       true,
-      this.item(title)
+      this.item(title),
     )
   }
 }

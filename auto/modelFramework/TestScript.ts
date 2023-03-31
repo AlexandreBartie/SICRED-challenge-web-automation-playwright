@@ -64,7 +64,7 @@ export abstract class TestScript {
    */
   addSession(name: string, flow: DataFlowType): void {
     this.sessions.push(
-      new TestSession(this, name, flow, this.sessions.length + 1)
+      new TestSession(this, name, flow, this.sessions.length + 1),
     )
   }
 
@@ -78,7 +78,7 @@ export abstract class TestScript {
     if (this.sessions.length === 0) this.addDefault()
 
     this.scenarios.push(
-      new TestScenario(this, name, flow, this.scenarios.length + 1)
+      new TestScenario(this, name, flow, this.scenarios.length + 1),
     )
   }
 

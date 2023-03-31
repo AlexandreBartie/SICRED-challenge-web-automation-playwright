@@ -1,43 +1,43 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test'
 
 import {
   WebButton,
   WebMenu,
   WebNumberBox,
   WebTextBox,
-  WebTreeView
-} from './webTestElements';
+  WebTreeView,
+} from './webTestElements'
 
 export enum findElementBy {
   findByID = 'id',
-  findByTitle = 'title'
+  findByTitle = 'title',
 }
 
 /**
  *
  */
 class WebPageBase {
-  public page: Page;
+  public page: Page
 
   get hasPage(): boolean {
-    return this.page !== undefined;
+    return this.page !== undefined
   }
 
   get getURL(): string {
-    if (this.hasPage) return this.page.url();
-    return '';
+    if (this.hasPage) return this.page.url()
+    return ''
   }
 
   get isBlanK(): boolean {
-    return this.hasPage && this.getURL === 'about:blank';
+    return this.hasPage && this.getURL === 'about:blank'
   }
 
   get isOpen(): boolean {
-    return this.hasPage && !this.page.isClosed();
+    return this.hasPage && !this.page.isClosed()
   }
 
   constructor(page: Page) {
-    this.page = page;
+    this.page = page
   }
 
   /**
@@ -47,7 +47,7 @@ class WebPageBase {
    * @param page page
    */
   setPage(page: Page): void {
-    this.page = page;
+    this.page = page
   }
 
   /**
@@ -55,26 +55,26 @@ class WebPageBase {
    * @returns void
    */
   async pause(seconds = 1): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+    return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
   }
 
   /**
    * @param url open URL in the current browser
    */
   async go(url: string) {
-    this.page.goto(url);
-    await this.page.bringToFront();
+    this.page.goto(url)
+    await this.page.bringToFront()
   }
 
   async title(): Promise<string> {
-    return await this.page.title();
+    return await this.page.title()
   }
 
   /**
    *
    */
   async refresh() {
-    await this.page.reload();
+    await this.page.reload()
   }
 
   /**
@@ -82,37 +82,37 @@ class WebPageBase {
    * @param height height of the page
    */
   async setViewport(width = 1920, height = 1080) {
-    await this.page.setViewportSize({ width, height });
+    await this.page.setViewportSize({ width, height })
   }
 
   /**
    * @param text simulate KeyPress action
    */
   keyPress(text: string) {
-    this.page.keyboard.insertText(text);
+    this.page.keyboard.insertText(text)
   }
 
   /**
    * @param success success
    */
   assert(success: boolean) {
-    expect(success).toBeTruthy();
+    expect(success).toBeTruthy()
   }
 
   /**
    * @param msg msg
    */
   fail(msg?: string) {
-    if (msg) console.log(`Fail: ${msg}`);
+    if (msg) console.log(`Fail: ${msg}`)
 
-    expect(false).toBeTruthy();
+    expect(false).toBeTruthy()
   }
 
   /**
    *
    */
   async close() {
-    await this.page.close();
+    await this.page.close()
   }
 }
 
@@ -120,13 +120,12 @@ class WebPageBase {
  *
  */
 class WebPageFind extends WebPageBase {
-
   /**
    * @param autoID find by data-testid of element
    * @returns Locator (Playwright)
    */
   findByID(id: string): Locator {
-    return this.page.getByTestId(id);
+    return this.page.getByTestId(id)
   }
 
   /**
@@ -134,7 +133,7 @@ class WebPageFind extends WebPageBase {
    * @returns Locator (Playwright)
    */
   findByTitle(title: string): Locator {
-    return this.page.getByTitle(title);
+    return this.page.getByTitle(title)
   }
 }
 
@@ -147,7 +146,7 @@ export class WebPage extends WebPageFind {
    * @returns WebTextBox
    */
   setTextBox(autoID: string): WebTextBox {
-    return new WebTextBox(this, this.findByID( autoID).getByRole('textbox'));
+    return new WebTextBox(this, this.findByID(autoID).getByRole('textbox'))
   }
 
   /**
@@ -155,7 +154,7 @@ export class WebPage extends WebPageFind {
    * @returns WebNumberBox
    */
   setNumberBox(autoID: string): WebNumberBox {
-    return new WebNumberBox(this, this.findByID(autoID).getByRole('textbox'));
+    return new WebNumberBox(this, this.findByID(autoID).getByRole('textbox'))
   }
 
   /**
@@ -163,7 +162,7 @@ export class WebPage extends WebPageFind {
    * @returns WebTextBox
    */
   setComboBox(autoID: string): WebTextBox {
-    return new WebTextBox(this, this.findByID(autoID).getByRole('combobox'));
+    return new WebTextBox(this, this.findByID(autoID).getByRole('combobox'))
   }
 
   /**
@@ -172,7 +171,7 @@ export class WebPage extends WebPageFind {
    * @returns WebNumberBox
    */
   setButton(title: string, autoID = 'genericFooterForm'): WebButton {
-    return new WebButton(this, this.findByID(autoID).getByTitle(title).first());
+    return new WebButton(this, this.findByID(autoID).getByTitle(title).first())
   }
 
   /**
@@ -180,7 +179,7 @@ export class WebPage extends WebPageFind {
    * @returns WebNumberBox
    */
   setMenu(autoID: string): WebMenu {
-    return new WebMenu(this, this.findByID(autoID));
+    return new WebMenu(this, this.findByID(autoID))
   }
 
   /**
@@ -188,6 +187,6 @@ export class WebPage extends WebPageFind {
    * @returns WebTreeView
    */
   setTreeView(autoID: string): WebTreeView {
-    return new WebTreeView(this, this.findByID(autoID));
+    return new WebTreeView(this, this.findByID(autoID))
   }
 }

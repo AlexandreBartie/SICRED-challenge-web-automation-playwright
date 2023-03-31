@@ -36,7 +36,7 @@ export class TestSession {
     script: TestScript,
     title: string,
     flow: DataFlowType,
-    order: number
+    order: number,
   ) {
     this.script = script
     this.name = title

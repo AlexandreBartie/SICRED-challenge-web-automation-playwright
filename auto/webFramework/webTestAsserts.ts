@@ -33,7 +33,7 @@ export class WebSelector {
    * @returns Locator
    */
   async getItemHTML(
-    element?: Locator
+    element?: Locator,
   ): Promise<null | ElementHandle<SVGElement | HTMLElement>> {
     try {
       return await this.getElement(element).elementHandle()
@@ -141,7 +141,7 @@ export class WebArea extends WebAttributes {
   private async draw(
     style: boolean,
     check: boolean,
-    element: Locator
+    element: Locator,
   ): Promise<void> {
     const item = await this.getItemHTML(element)
     if (item) {
@@ -191,7 +191,7 @@ export class WebAsserts extends WebArea {
     this.borderCheck(element)
     await expect(
       this.getElement(element),
-      'Must have this text inside'
+      'Must have this text inside',
     ).toHaveText(text)
   }
 
@@ -205,7 +205,7 @@ export class WebAsserts extends WebArea {
     text: string,
     expected: string,
     equal = true,
-    element?: Locator
+    element?: Locator,
   ): void {
     this.borderCheck(element)
     if (equal) expect(expected, 'Must have the same value').toEqual(text)
