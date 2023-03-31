@@ -1,7 +1,8 @@
 import { test } from '@playwright/test'
-import { ScopeMMO } from '../../test/ProjectMMO/ScopeMMO'
 
-const scope = new ScopeMMO()
+import { ScopeAUTO } from '../../../src/ProjectAUTO/ScopeAUTO'
+
+const scope = new ScopeAUTO()
 
 test.describe(scope.title, () => {
   for (const script of scope.scripts) {
