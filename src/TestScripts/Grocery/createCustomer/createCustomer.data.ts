@@ -1,12 +1,32 @@
 import { CreateCustomerTestPage } from './createCustomer.page'
 import { TestFlow } from '../../../../auto/modelFramework/TestFlow'
 import { ScriptAUTO } from '../../../ProjectAUTO/ScriptAUTO'
-import { DataFlowType } from '../../../../auto/modelFramework/TestContract'
+
+interface ICreateCustomerTestFlow {
+  customerName: string
+  contactLastName: string
+  contactFirstName: string
+  phone: string
+  address: string
+  addressComplement: string
+  city: string
+  state: string
+  country: string
+  postalCode: string
+  salesRepresentation: string
+  creditLimit: string
+  deleted: number
+  action: string
+  success: boolean
+}
 
 /**
  *
  */
-export class CreateCustomerTestFlow extends TestFlow {
+export class CreateCustomerTestFlow
+  extends TestFlow
+  implements ICreateCustomerTestFlow
+{
   customerName = 'New Customer'
   contactLastName = 'Diggs'
   contactFirstName = 'John'
@@ -45,7 +65,7 @@ export class CreateCustomerTestScript extends ScriptAUTO<
    *
    */
   constructor() {
-    super()
+    super(CreateCustomerTestPage, CreateCustomerTestFlow)
 
     this.prefix = '#01'
     this.name = 'Create Customer'
@@ -71,12 +91,5 @@ export class CreateCustomerTestScript extends ScriptAUTO<
     //   name: 'Phase CANCEL button',
     //   action: 'Cancel'
     // });
-  }
-
-  /**
-   * @param data data
-   */
-  async run(data?: DataFlowType): Promise<void> {
-    await this.web.run(this.getFlow(data))
   }
 }

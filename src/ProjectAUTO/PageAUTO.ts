@@ -1,9 +1,10 @@
 import { WebPage } from '../../auto/webFramework/webTestPage'
+import { TestFlow } from '../../auto/modelFramework/TestFlow'
 
 /**
  *
  */
-export class PageAUTO extends WebPage {
+export abstract class PageAUTO extends WebPage {
   readonly theme = this.setComboBox('switch-version-select')
   readonly addCustomer = this.setLink(' Add Record')
 
@@ -19,4 +20,6 @@ export class PageAUTO extends WebPage {
 
     await this.go(this.url)
   }
+
+  abstract run(flow: TestFlow): Promise<void>
 }

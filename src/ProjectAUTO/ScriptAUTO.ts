@@ -5,6 +5,14 @@ import { DataFlowType } from '../../auto/modelFramework/TestContract'
 import { TestFlow } from '../../auto/modelFramework/TestFlow'
 import { Page } from 'playwright-core'
 
+export function getClassInstance<T, D>(
+  Class: { new (param?: D): T },
+  param?: D,
+): T {
+  if (param) return new Class(param)
+  return new Class()
+}
+
 /**
  *
  */
@@ -26,7 +34,10 @@ export abstract class ScriptAUTO<
   /**
    *
    */
-  constructor() {
+  constructor(
+    readonly model_T: { new (page: Page): T },
+    readonly model_D: { new (): D },
+  ) {
     super(new BaselineAUTO())
   }
 
@@ -41,7 +52,7 @@ export abstract class ScriptAUTO<
       this.web.setPage(page)
     } else {
       this.setBaseline()
-      this.web = <T>new PageAUTO(page) // new this.constructor_T(page)
+      this.web = new this.model_T(page) // new this.constructor_T(page)
     }
     await this.web.start()
   }
@@ -49,10 +60,12 @@ export abstract class ScriptAUTO<
   /**
    * @param data data
    */
-  getFlow(data?: DataFlowType): D {
-    const flow = <D>new TestFlow() // new this.constructor_D()
+  async run(data?: DataFlowType): Promise<void> {
+    const flow = new this.model_D()
 
-    return flow.getMerge(data) as D
+    const flowMerge = flow.getMerge(data) as D
+
+    await this.web.run(flowMerge)
   }
 
   /**
