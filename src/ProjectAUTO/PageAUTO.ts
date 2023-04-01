@@ -4,7 +4,8 @@ import { WebPage } from '../../auto/webFramework/webTestPage'
  *
  */
 export class PageAUTO extends WebPage {
-  readonly tree = this.setTextBox('switch-version-select')
+  readonly theme = this.setComboBox('switch-version-select')
+  readonly addCustomer = this.setLink(' Add Record')
 
   private url =
     'https://www.grocerycrud.com/v1.x/demo/my_boss_is_in_a_hurry/bootstrap-v5'

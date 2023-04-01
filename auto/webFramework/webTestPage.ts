@@ -1,12 +1,90 @@
 import { Page, Locator, expect } from '@playwright/test'
 
-import {
-  WebButton,
-  WebMenu,
-  WebNumberBox,
-  WebTextBox,
-  WebTreeView,
-} from './webTestElements'
+import { WebButton, WebLink, WebNumberBox, WebTextBox } from './webTestElements'
+
+type roleType =
+  | 'alert'
+  | 'alertdialog'
+  | 'application'
+  | 'article'
+  | 'banner'
+  | 'blockquote'
+  | 'button'
+  | 'caption'
+  | 'cell'
+  | 'checkbox'
+  | 'code'
+  | 'columnheader'
+  | 'combobox'
+  | 'complementary'
+  | 'contentinfo'
+  | 'definition'
+  | 'deletion'
+  | 'dialog'
+  | 'directory'
+  | 'document'
+  | 'emphasis'
+  | 'feed'
+  | 'figure'
+  | 'form'
+  | 'generic'
+  | 'grid'
+  | 'gridcell'
+  | 'group'
+  | 'heading'
+  | 'img'
+  | 'insertion'
+  | 'link'
+  | 'list'
+  | 'listbox'
+  | 'listitem'
+  | 'log'
+  | 'main'
+  | 'marquee'
+  | 'math'
+  | 'meter'
+  | 'menu'
+  | 'menubar'
+  | 'menuitem'
+  | 'menuitemcheckbox'
+  | 'menuitemradio'
+  | 'navigation'
+  | 'none'
+  | 'note'
+  | 'option'
+  | 'paragraph'
+  | 'presentation'
+  | 'progressbar'
+  | 'radio'
+  | 'radiogroup'
+  | 'region'
+  | 'row'
+  | 'rowgroup'
+  | 'rowheader'
+  | 'scrollbar'
+  | 'search'
+  | 'searchbox'
+  | 'separator'
+  | 'slider'
+  | 'spinbutton'
+  | 'status'
+  | 'strong'
+  | 'subscript'
+  | 'superscript'
+  | 'switch'
+  | 'tab'
+  | 'table'
+  | 'tablist'
+  | 'tabpanel'
+  | 'term'
+  | 'textbox'
+  | 'time'
+  | 'timer'
+  | 'toolbar'
+  | 'tooltip'
+  | 'tree'
+  | 'treegrid'
+  | 'treeitem'
 
 export enum findElementBy {
   findByID = 'id',
@@ -135,6 +213,14 @@ class WebPageFind extends WebPageBase {
   findByTitle(title: string): Locator {
     return this.page.getByTitle(title)
   }
+
+  /**
+   * @param title find by title of element
+   * @returns Locator (Playwright)
+   */
+  findByRole(role: roleType, title: string): Locator {
+    return this.page.getByRole(role, { name: title })
+  }
 }
 
 /**
@@ -178,15 +264,7 @@ export class WebPage extends WebPageFind {
    * @param autoID Relative of data-testid
    * @returns WebNumberBox
    */
-  setMenu(autoID: string): WebMenu {
-    return new WebMenu(this, this.findByID(autoID))
-  }
-
-  /**
-   * @param autoID Relative of data-testid
-   * @returns WebTreeView
-   */
-  setTreeView(autoID: string): WebTreeView {
-    return new WebTreeView(this, this.findByID(autoID))
+  setLink(title: string): WebLink {
+    return new WebLink(this, this.findByRole('link', title))
   }
 }

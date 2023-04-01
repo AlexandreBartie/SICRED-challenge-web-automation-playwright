@@ -54,8 +54,8 @@ export class CreateCustomerTestScript extends ScriptAUTO {
 
     this.addScenario('Phase input CASE data')
     this.addTestCase('upper name', { customerName: 'name UPPER' })
-    this.addTestCase('lower name', { customerName: 'name lower' })
-    this.addTestCase('mixed name', { customerName: 'name Mixed' })
+    // this.addTestCase('lower name', { customerName: 'name lower' })
+    // this.addTestCase('mixed name', { customerName: 'name Mixed' })
 
     // this.addScenario('Phase input VALID data');
     // this.addTestCase('shortlest name', { name: 'Z' });

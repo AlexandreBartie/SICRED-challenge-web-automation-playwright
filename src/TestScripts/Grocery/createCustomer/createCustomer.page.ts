@@ -35,11 +35,7 @@ export class CreateCustomerTestPage extends CreateCustomerTestMapping {
    * @param flow receive the data test
    */
   async run(flow: CreateCustomerTestFlow): Promise<void> {
-    // await this.tree.select(flow.parent);
-
-    // await this.pause();
-
-    // await this.menu.open(flow.menu);
+    await this.addCustomer.click()
 
     await this.pause()
 

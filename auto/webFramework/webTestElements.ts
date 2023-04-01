@@ -155,6 +155,16 @@ export class WebButton extends WebClickable {
     await this.element.setInputFiles(files)
   }
 }
+
+export class WebLink extends WebClickable {
+  /**
+   * @param enabled check if this button is enabled or not
+   */
+  async assertEnabled(enabled: boolean): Promise<void> {
+    this.assertOk(enabled === (await this.included('enabled')))
+  }
+}
+
 /**
  *
  */
