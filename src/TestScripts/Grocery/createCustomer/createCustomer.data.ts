@@ -1,9 +1,7 @@
-import { Page } from '@playwright/test'
-
 import { CreateCustomerTestPage } from './createCustomer.page'
-import { DataFlowType } from '../../../../auto/modelFramework/TestContract'
 import { TestFlow } from '../../../../auto/modelFramework/TestFlow'
 import { ScriptAUTO } from '../../../ProjectAUTO/ScriptAUTO'
+import { DataFlowType } from '../../../../auto/modelFramework/TestContract'
 
 /**
  *
@@ -39,9 +37,10 @@ export class CreateCustomerTestFlow extends TestFlow {
 /**
  *
  */
-export class CreateCustomerTestScript extends ScriptAUTO {
-  public web: CreateCustomerTestPage
-
+export class CreateCustomerTestScript extends ScriptAUTO<
+  CreateCustomerTestPage,
+  CreateCustomerTestFlow
+> {
   /**
    *
    */
@@ -54,8 +53,8 @@ export class CreateCustomerTestScript extends ScriptAUTO {
 
     this.addScenario('Phase input CASE data')
     this.addTestCase('upper name', { customerName: 'name UPPER' })
-    // this.addTestCase('lower name', { customerName: 'name lower' })
-    // this.addTestCase('mixed name', { customerName: 'name Mixed' })
+    this.addTestCase('lower name', { customerName: 'name lower' })
+    this.addTestCase('mixed name', { customerName: 'name Mixed' })
 
     // this.addScenario('Phase input VALID data');
     // this.addTestCase('shortlest name', { name: 'Z' });
@@ -75,29 +74,9 @@ export class CreateCustomerTestScript extends ScriptAUTO {
   }
 
   /**
-   * PageAUTO it is able to control and change page elements in AUTO Desktop
-   * if it a first time to create a PageAUTO
-   *
-   * @param page current page of browser to control automation actions (Playwright library)
-   */
-  async setup(page: Page): Promise<void> {
-    if (this.web) {
-      this.web.setPage(page)
-    } else {
-      this.setBaseline()
-      this.web = new CreateCustomerTestPage(page)
-    }
-    await this.web.start()
-  }
-
-  /**
    * @param data data
    */
   async run(data?: DataFlowType): Promise<void> {
-    const flow = new CreateCustomerTestFlow()
-
-    flow.getMerge(data) as CreateCustomerTestFlow
-
-    await this.web.run(flow)
+    await this.web.run(this.getFlow(data))
   }
 }

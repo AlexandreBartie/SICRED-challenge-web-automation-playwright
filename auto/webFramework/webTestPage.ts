@@ -203,7 +203,7 @@ class WebPageFind extends WebPageBase {
    * @returns Locator (Playwright)
    */
   findByID(id: string): Locator {
-    return this.page.getByTestId(id)
+    return this.page.locator(`#${id}`)
   }
 
   /**
@@ -232,7 +232,7 @@ export class WebPage extends WebPageFind {
    * @returns WebTextBox
    */
   setTextBox(autoID: string): WebTextBox {
-    return new WebTextBox(this, this.findByID(autoID).getByRole('textbox'))
+    return new WebTextBox(this, this.findByID(autoID))
   }
 
   /**
@@ -240,7 +240,7 @@ export class WebPage extends WebPageFind {
    * @returns WebNumberBox
    */
   setNumberBox(autoID: string): WebNumberBox {
-    return new WebNumberBox(this, this.findByID(autoID).getByRole('textbox'))
+    return new WebNumberBox(this, this.findByID(autoID))
   }
 
   /**
@@ -248,7 +248,7 @@ export class WebPage extends WebPageFind {
    * @returns WebTextBox
    */
   setComboBox(autoID: string): WebTextBox {
-    return new WebTextBox(this, this.findByID(autoID).getByRole('combobox'))
+    return new WebTextBox(this, this.findByID(autoID))
   }
 
   /**
@@ -256,8 +256,8 @@ export class WebPage extends WebPageFind {
    * @param autoID Relative of data-testid
    * @returns WebNumberBox
    */
-  setButton(title: string, autoID = 'genericFooterForm'): WebButton {
-    return new WebButton(this, this.findByID(autoID).getByTitle(title).first())
+  setButton(autoID: string): WebButton {
+    return new WebButton(this, this.findByID(autoID))
   }
 
   /**

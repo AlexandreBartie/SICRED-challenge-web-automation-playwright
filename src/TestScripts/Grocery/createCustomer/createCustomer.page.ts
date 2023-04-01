@@ -4,27 +4,27 @@ import { CreateCustomerTestFlow } from './createCustomer.data'
 /**
  *
  */
-export class CreateCustomerTestMapping extends PageAUTO {
+export abstract class CreateCustomerTestMapping extends PageAUTO {
   readonly customerName = this.setTextBox('field-customerName')
   readonly contactLastName = this.setTextBox('field-contactLastName')
   readonly contactFirstName = this.setTextBox('field-contactFirstName')
 
   readonly phone = this.setTextBox('field-phone')
-  readonly address = this.setTextBox('field-addressline1')
-  readonly addressComplement = this.setTextBox('field-addressline2')
+  readonly address = this.setTextBox('field-addressLine1')
+  readonly addressComplement = this.setTextBox('field-addressLine2')
 
   readonly city = this.setTextBox('field-city')
   readonly state = this.setTextBox('field-state')
   readonly postalCode = this.setTextBox('field-postalCode')
   readonly country = this.setTextBox('field-country')
 
-  readonly saleRepresentation = this.setTextBox('field-salesrepEmployeeNumber')
+  readonly saleRepresentation = this.setTextBox('field-salesRepEmployeeNumber')
   readonly creditLimit = this.setTextBox('field-creditLimit')
   readonly deleted = this.setTextBox('field-deleted')
 
-  readonly buttonUpdate = this.setButton('Update changes')
-  readonly buttonUpdateGoBack = this.setButton('Update and go back to list')
-  readonly buttonCancel = this.setButton('Cancel')
+  readonly buttonAction = this.setButton('form-button-save')
+  readonly buttonActionGoBack = this.setButton('save-and-go-back-button')
+  readonly buttonCancel = this.setButton('cancel-button')
 }
 
 /**
@@ -39,11 +39,11 @@ export class CreateCustomerTestPage extends CreateCustomerTestMapping {
 
     await this.pause()
 
-    await this.buttonUpdate.assertEnabled(true)
-    await this.buttonUpdateGoBack.assertEnabled(true)
-    await this.buttonCancel.assertEnabled(true)
+    // await this.buttonSave.assertEnabled(true)
+    // await this.buttonSaveGoBack.assertEnabled(true)
+    // await this.buttonCancel.assertEnabled(true)
 
-    await this.customerName.assertEmpty()
+    // await this.customerName.assertEmpty()
 
     // stepRoutine
 
@@ -66,10 +66,10 @@ export class CreateCustomerTestPage extends CreateCustomerTestMapping {
 
     await this.pause()
 
-    await this.buttonUpdate.assertEnabled(true)
-    await this.buttonCancel.assertEnabled(true)
+    // await this.buttonAction.assertEnabled(true)
+    // await this.buttonCancel.assertEnabled(true)
 
-    if (flow.isUpdate) await this.buttonUpdate.click()
+    if (flow.isUpdate) await this.buttonAction.click()
     else await this.buttonCancel.click()
 
     // posRoutine

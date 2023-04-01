@@ -7,7 +7,9 @@
     "@playwright/test": "^1.27.1"
   },
   "scripts": {
-    "test": "npx playwright test"
+    "test-show": "npx playwright test --headed",
+    "test-ui": "npx playwright test --ui",
+    "test-fast": "npx playwright test"
   },
   "dependencies": {
     "eslint-plugin-react": "^7.20.3",
