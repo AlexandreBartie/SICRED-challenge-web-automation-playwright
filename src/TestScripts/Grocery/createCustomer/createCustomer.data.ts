@@ -2,24 +2,6 @@ import { CreateCustomerTestPage } from './createCustomer.page'
 import { TestFlow } from '../../../../auto/modelFramework/TestFlow'
 import { ScriptAUTO } from '../../../ProjectAUTO/ScriptAUTO'
 
-// interface ICreateCustomerTestFlow {
-//   customerName: string
-//   contactLastName: string
-//   contactFirstName: string
-//   phone: string
-//   address: string
-//   addressComplement: string
-//   city: string
-//   state: string
-//   country: string
-//   postalCode: string
-//   salesRepresentation: string
-//   creditLimit: string
-//   deleted: number
-//   action: string
-//   success: boolean
-// }
-
 /**
  *
  */
@@ -39,7 +21,8 @@ export class CreateCustomerTestFlow extends TestFlow {
   deleted = 0
   action = 'Update'
   success = true
-  msg = 'Your data has been successfully stored into the database.'
+  msg =
+    'Your data has been successfully stored into the database. Edit Record or Go back to list'
 
   /**
    * @returns verify is the current value action is 'Create' or not.
@@ -71,8 +54,8 @@ export class CreateCustomerTestScript extends ScriptAUTO<
 
     this.addScenario('Phase input CASE data')
     this.addTestCase('upper name', { customerName: 'name UPPER' })
-    // this.addTestCase('lower name', { customerName: 'name lower' })
-    // this.addTestCase('mixed name', { customerName: 'name Mixed' })
+    this.addTestCase('lower name', { customerName: 'name lower' })
+    this.addTestCase('mixed name', { customerName: 'name Mixed' })
 
     // this.addScenario('Phase input VALID data');
     // this.addTestCase('shortlest name', { name: 'Z' });

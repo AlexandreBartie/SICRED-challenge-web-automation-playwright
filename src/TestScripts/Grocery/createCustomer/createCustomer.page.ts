@@ -81,8 +81,6 @@ export class CreateCustomerTestPage extends CreateCustomerTestMapping {
 
     await this.message.assertHasText(flow.msg)
 
-    await this.pause()
-
     // await this.buttonUpdate.assertVisible(!flow.success);
     // await this.buttonUpdate.assertVisible(!flow.success);
     // await this.buttonUpdate.assertVisible(!flow.success);
