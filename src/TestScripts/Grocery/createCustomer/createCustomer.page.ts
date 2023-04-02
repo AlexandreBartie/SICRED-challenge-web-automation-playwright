@@ -25,6 +25,8 @@ export abstract class CreateCustomerTestMapping extends PageAUTO {
   readonly buttonAction = this.setButton('form-button-save')
   readonly buttonActionGoBack = this.setButton('save-and-go-back-button')
   readonly buttonCancel = this.setButton('cancel-button')
+
+  readonly message = this.setMessage('report-success')
 }
 
 /**
@@ -39,11 +41,12 @@ export class CreateCustomerTestPage extends CreateCustomerTestMapping {
 
     await this.pause()
 
-    // await this.buttonSave.assertEnabled(true)
-    // await this.buttonSaveGoBack.assertEnabled(true)
-    // await this.buttonCancel.assertEnabled(true)
+    await this.buttonAction.assertEnabled(true)
+    await this.buttonCancel.assertEnabled(true)
 
-    // await this.customerName.assertEmpty()
+    await this.customerName.assertEmpty()
+    await this.contactLastName.assertEmpty()
+    await this.contactFirstName.assertEmpty()
 
     // stepRoutine
 
@@ -66,13 +69,17 @@ export class CreateCustomerTestPage extends CreateCustomerTestMapping {
 
     await this.pause()
 
-    // await this.buttonAction.assertEnabled(true)
-    // await this.buttonCancel.assertEnabled(true)
+    await this.buttonAction.assertEnabled(true)
+    await this.buttonCancel.assertEnabled(true)
 
     if (flow.isUpdate) await this.buttonAction.click()
     else await this.buttonCancel.click()
 
     // posRoutine
+
+    await this.pause()
+
+    await this.message.assertHasText(flow.msg)
 
     await this.pause()
 

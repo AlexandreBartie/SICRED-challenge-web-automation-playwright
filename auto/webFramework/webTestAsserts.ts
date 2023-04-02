@@ -1,6 +1,8 @@
 import { ElementHandle, expect, Locator } from '@playwright/test'
 import { WebPage } from './webTestPage'
 
+type itemHTML = ElementHandle<SVGElement | HTMLElement>
+
 /**
  *
  */
@@ -32,9 +34,7 @@ export class WebSelector {
    * @param element element
    * @returns Locator
    */
-  async getItemHTML(
-    element?: Locator,
-  ): Promise<null | ElementHandle<SVGElement | HTMLElement>> {
+  async getItemHTML(element?: Locator): Promise<null | itemHTML> {
     try {
       return await this.getElement(element).elementHandle()
     } catch {
@@ -60,35 +60,42 @@ export class WebAttributes extends WebSelector {
   }
 
   /**
-   * @returns get the HTMLElement.textContent of the current element
+   * @returns get the itemHTML.textContent of the current element
    */
   async textContent(): Promise<string | null> {
     return await this.element.textContent()
   }
 
   /**
-   * @returns get the HTMLElement.class of the current element
+   * @returns get the itemHTML.isDisabled of the current element
+   */
+  async enabled(): Promise<boolean> {
+    return await this.element.isEnabled()
+  }
+
+  /**
+   * @returns get the itemHTML.class of the current element
    */
   async class(): Promise<string> {
     return await this.attribute('class')
   }
 
   /**
-   * @returns get the HTMLElement.title of the current element
+   * @returns get the itemHTML.title of the current element
    */
   async title(): Promise<string | null> {
     return await this.attribute('title')
   }
 
   /**
-   * @returns get the HTMLElement.innerText of the current element
+   * @returns get the itemHTML.innerText of the current element
    */
   async innerText(): Promise<string | null> {
     return await this.element.innerText()
   }
 
   /**
-   * @param text find this text in HTMLElement.class
+   * @param text find this text in itemHTML.class
    * @returns find or not
    */
   async included(text: string): Promise<boolean> {
@@ -104,61 +111,55 @@ export class WebArea extends WebAttributes {
    * @param element element
    */
   async border(element?: Locator): Promise<void> {
-    const item = this.getElement(element)
-    await this.borderGeneric(false, item)
+    await this.draw(false, element)
   }
 
   /**
    * @param element element
    */
   async borderCheck(element?: Locator): Promise<void> {
-    const item = this.getElement(element)
-    await this.borderGeneric(true, item)
+    await this.draw(true, element)
   }
 
   /**
    * @param check check
    * @param element element
    */
-  private async borderGeneric(check: boolean, element: Locator): Promise<void> {
+  private async draw(check: boolean, element?: Locator): Promise<void> {
     const drawLines = true
     const inspectItens = false
 
-    if (drawLines) {
-      await this.draw(true, check, element)
-      await this.web.pause(1)
-      await this.draw(false, check, element)
-    }
-
-    if (inspectItens) element.highlight()
-  }
-
-  /**
-   * @param style style of the border
-   * @param check process check
-   * @param element element to get border
-   */
-  private async draw(
-    style: boolean,
-    check: boolean,
-    element: Locator,
-  ): Promise<void> {
     const item = await this.getItemHTML(element)
     if (item) {
-      if (style)
-        if (check)
-          await this.web.page.evaluate((el) => {
-            if (el) el.style.border = '2px Dotted green'
-          }, item)
-        else
-          await this.web.page.evaluate((el) => {
-            if (el) el.style.border = '2px solid orange'
-          }, item)
-      else
-        await this.web.page.evaluate((el) => {
-          if (el) el.style.border = 'none'
-        }, item)
+      if (drawLines) {
+        const style = await this.getStyle(item)
+
+        const border = check ? '2px Dotted green' : '2px solid orange'
+
+        this.setBorder(item, border)
+        await this.web.pause(0.1)
+        this.setBorder(item, style.border)
+      }
+
+      if (inspectItens) this.getElement(element).highlight()
     }
+  }
+
+  private async getStyle(item: itemHTML): Promise<CSSStyleDeclaration> {
+    //    let style: CSSStyleDeclaration
+    const style = await this.web.page.evaluate((arg): CSSStyleDeclaration => {
+      return arg.style
+    }, item)
+    return style
+  }
+
+  private setBorder(item: itemHTML, border: string) {
+    this.web.page.evaluate(
+      (arg) => {
+        if (arg) arg.item.style.border = arg.border //'2px solid orange'
+      },
+      { item, border },
+    )
   }
 }
 

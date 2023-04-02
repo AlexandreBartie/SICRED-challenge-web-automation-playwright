@@ -1,6 +1,12 @@
 import { Page, Locator, expect } from '@playwright/test'
 
-import { WebButton, WebLink, WebNumberBox, WebTextBox } from './webTestElements'
+import {
+  WebButton,
+  WebElement,
+  WebLink,
+  WebNumberBox,
+  WebTextBox,
+} from './webTestElements'
 
 type roleType =
   | 'alert'
@@ -258,6 +264,14 @@ export class WebPage extends WebPageFind {
    */
   setButton(autoID: string): WebButton {
     return new WebButton(this, this.findByID(autoID))
+  }
+
+  /**
+   * @param autoID Relative of data-testid
+   * @returns WebNumberBox
+   */
+  setMessage(autoID: string): WebElement {
+    return new WebLink(this, this.findByID(autoID))
   }
 
   /**

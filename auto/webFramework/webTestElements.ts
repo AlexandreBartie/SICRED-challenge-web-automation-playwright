@@ -57,6 +57,13 @@ export class WebElement extends WebAsserts {
  */
 export class WebClickable extends WebElement {
   /**
+   * @param enabled check if this button is enabled or not
+   */
+  async assertEnabled(enabled: boolean): Promise<void> {
+    this.assertOk(enabled === (await this.enabled()))
+  }
+
+  /**
    * @param element element
    */
   async click(element?: Locator): Promise<void> {
@@ -141,13 +148,6 @@ export class WebNumberBox extends WebTextBox {}
  *
  */
 export class WebButton extends WebClickable {
-  /**
-   * @param enabled check if this button is enabled or not
-   */
-  async assertEnabled(enabled: boolean): Promise<void> {
-    this.assertOk(enabled === (await this.included('enabled')))
-  }
-
   /**
    * @param files simulate upload files associated in the button
    */
